@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.github.scribejava.core.model.OAuth1RequestToken;
 import com.github.scribejava.core.model.Token;
 import com.nimbusds.oauth2.sdk.Scope;
@@ -46,6 +47,8 @@ public class DefaultJsonConverter implements JsonConverter {
         mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         mapper.setVisibility(PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
         mapper.setVisibility(PropertyAccessor.IS_GETTER, JsonAutoDetect.Visibility.NONE);
+
+        mapper.registerModule(new JavaTimeModule());
 
         mapper.addMixIn(OAuth1RequestToken.class, OAuth1RequestTokenMixin.class)
             .addMixIn(BearerAccessToken.class, BearerAccessTokenMixin.class)
